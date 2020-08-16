@@ -6,6 +6,8 @@ import {uuid} from 'uuidv4'
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFindAllProvidersDTO from '@modules/appointments/dtos/IFindAllProvidersDTO';
+import IFindAllprovidersDTO from "@modules/appointments/dtos/IFindAllProvidersDTO";
 
 
 
@@ -49,6 +51,16 @@ class UsersRepository implements IUsersRepository{
       return UserData;
 
 
+  }
+
+  public async findAllProviders({except_user_id}: IFindAllprovidersDTO): Promise<User[]> {
+      let users = this.users;
+
+      if(except_user_id) {
+        users = this.users.filter(user => user.id  !== except_user_id);
+      }
+
+      return users;
   }
 
 
