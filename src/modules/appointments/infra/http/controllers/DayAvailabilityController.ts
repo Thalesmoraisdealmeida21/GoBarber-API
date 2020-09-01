@@ -11,7 +11,7 @@ import { Request, Response } from 'express';
 export default class ProviderDayAvailabilityController {
    public async index(request: Request, response: Response): Promise<Response>{
      const provider_id = request.params.id;
-    const  { month, year, day } = request.body
+    const  { month, year, day } = request.query
     try {
       const user_id = request.user.id;
       const listProviderDayAvailability = container.resolve(ListProviderDayAvailability);
@@ -20,9 +20,9 @@ export default class ProviderDayAvailabilityController {
 
       const availability = await listProviderDayAvailability.execute({
           provider_id,
-          day,
-          month,
-          year
+          day: Number(day),
+          month: Number(month),
+          year: Number(year)
        });
 
       return response.json(availability);
